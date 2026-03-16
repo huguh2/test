@@ -1,0 +1,41 @@
+name: "🆕 新服务上线申请"
+description: "适用于全新微服务、新业务模块的首次生产部署"
+title: "[Launch] 服务名 - 上线申请"
+labels: ["launch", "provisioning"]
+body:
+  - type: markdown
+    attributes:
+      value: "### 🚀 服务上线前置准入"
+  - type: checkboxes
+    id: infrastructure
+    attributes:
+      label: 🏗️ 基础资源核对
+      options:
+        - label: "域名/负载均衡已配置 (HTTPS 证书已生效)"
+          required: true
+        - label: "网络防火墙/安全组已开通 (入站/出站端口)"
+          required: true
+        - label: "数据库/Redis/消息队列等中间件账号已创建并连通"
+          required: true
+  - type: checkboxes
+    id: observability
+    attributes:
+      label: 📊 监控与日志
+      options:
+        - label: "日志采集已配置 (日志不落盘或已接通 ELK/SLS)"
+          required: true
+        - label: "基础监控已接入 (CPU/内存/磁盘告警)"
+          required: true
+        - label: "核心业务指标监控 (QPS/RT/SLI) 已配置看板"
+          required: true
+  - type: checkboxes
+    id: stability
+    attributes:
+      label: 🛡️ 稳定性保障
+      options:
+        - label: "已完成压测，确认单机 QPS 上限"
+          required: true
+        - label: "已配置资源限额 (Resource Quota / Limit)"
+          required: true
+        - label: "已提供紧急下线/功能开关方案"
+          required: true
