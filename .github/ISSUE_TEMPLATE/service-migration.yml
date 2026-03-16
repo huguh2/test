@@ -1,0 +1,52 @@
+name: "🔄 旧服务迁移新服务"
+description: "适用于业务平滑迁移，包含流量切换和数据一致性检查"
+title: "[Migration] 服务名 - 从旧环境迁往新环境"
+labels: ["migration", "high-risk"]
+body:
+  - type: dropdown
+    id: migration_method
+    attributes:
+      label: 迁移方式
+      options:
+        - DNS 切换 (直接切流量)
+        - 灰度分流 (逐台替换)
+        - 停机迁移 (涉及数据同步)
+    validations:
+      required: true
+  - type: checkboxes
+    id: data_consistency
+    attributes:
+      label: 💾 数据与状态一致性
+      options:
+        - label: "新旧环境数据库/缓存数据已完成实时同步"
+          required: true
+        - label: "已进行数据抽样校验，确认无差异"
+          required: true
+        - label: "Session/Token 等用户状态已同步或兼容"
+          required: true
+  - type: checkboxes
+    id: traffic_cutover
+    attributes:
+      label: 🚦 流量切换核对
+      options:
+        - label: "已调低 DNS TTL 时间 (建议 60s)"
+          required: true
+        - label: "新环境已预热 (Warm-up)，连接池已建立"
+          required: true
+        - label: "旧环境已配置只读模式 (如果涉及写操作)"
+          required: true
+  - type: textarea
+    id: rollback_trigger
+    attributes:
+      label: 🛑 终止/回滚触发点
+      placeholder: "例如：当新环境错误率超过 5% 或 耗时增加 200ms 时立即切回旧环境"
+    validations:
+      required: true
+  - type: checkboxes
+    id: cleanup
+    attributes:
+      label: 🧹 后置清理 (操作完成后 24h)
+      options:
+        - label: "确认旧环境流量清零"
+          required: true
+        - label: "释放旧环境资源 (下线机器/回收 IP)"
