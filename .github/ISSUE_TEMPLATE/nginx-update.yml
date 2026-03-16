@@ -1,0 +1,44 @@
+name: "🚀 Nginx 版本更新/升级"
+description: "适用于 Nginx 二进制更新、平滑升级或安全补丁"
+title: "[Nginx-Update] 版本号 - 操作日期"
+labels: ["nginx", "high-risk", "update"]
+body:
+  - type: dropdown
+    id: update_type
+    attributes:
+      label: 更新类型
+      options:
+        - 跨大版本升级 (如 1.20 -> 1.22)
+        - 小版本安全补丁
+        - 新增编译模块
+    validations:
+      required: true
+  - type: checkboxes
+    id: pre_flight
+    attributes:
+      label: 🚧 高危操作预检 (Pre-flight)
+      options:
+        - label: "已确认业务低峰期时间段"
+          required: true
+        - label: "已完整备份 nginx 二进制文件及配置目录"
+          required: true
+        - label: "已确认旧版本 PID 路径及信号量操作流程"
+          required: true
+        - label: "已在备机/实验室完成平滑升级流程演练"
+          required: true
+  - type: textarea
+    id: rollback_plan
+    attributes:
+      label: 🆘 紧急回滚方案
+      value: "1. 停止新版本进程\n2. 恢复旧版本二进制文件\n3. 启动旧版本并验证"
+    validations:
+      required: true
+  - type: checkboxes
+    id: monitoring
+    attributes:
+      label: 📈 监控观测
+      options:
+        - label: "观测 5xx 状态码是否有突增"
+          required: true
+        - label: "观测 CPU/内存使用率是否异常"
+          required: true
