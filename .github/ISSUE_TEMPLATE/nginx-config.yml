@@ -1,0 +1,44 @@
+name: "🌐 Nginx 配置变更"
+description: "适用于域名解析、Proxy Pass、SSL 证书等配置调整"
+title: "[Nginx-Config] 业务名-变更简述"
+labels: ["nginx", "config-change"]
+body:
+  - type: markdown
+    attributes:
+      value: "### 💡 操作原则：先测试，后重载"
+  - type: input
+    id: domain
+    attributes:
+      label: 涉及域名/服务
+      placeholder: "例如: api.example.com"
+    validations:
+      required: true
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: 🛡️ 准入 Checklist (强制勾选)
+      options:
+        - label: "已在测试/预发环境验证配置语法正确"
+          required: true
+        - label: "已备份当前的 /etc/nginx/conf.d/ 目录"
+          required: true
+        - label: "已准备好回滚命令 (cp backup_conf target_conf)"
+          required: true
+  - type: textarea
+    id: diff
+    attributes:
+      label: 变更内容 (Diff)
+      placeholder: "请粘贴修改前后的关键代码对比"
+    validations:
+      required: true
+  - type: checkboxes
+    id: validation
+    attributes:
+      label: ✅ 执行后验证步骤
+      options:
+        - label: "执行 nginx -t 检查语法"
+          required: true
+        - label: "执行 nginx -s reload 平滑重启"
+          required: true
+        - label: "手动 curl 或浏览器访问确认业务正常"
+          required: true
