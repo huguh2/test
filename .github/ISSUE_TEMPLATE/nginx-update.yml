@@ -3,6 +3,27 @@ description: "适用于 Nginx 二进制更新、平滑升级或安全补丁"
 title: "[Nginx-Update] 版本号 - 操作日期"
 labels: ["nginx", "high-risk", "update"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 📘 操作说明
+
+        本操作属于**高风险变更**，涉及 Nginx 主进程替换，请严格按照步骤执行。
+
+        ### 🎯 目标
+        - 升级 Nginx 版本 / 修复安全漏洞 / 增加模块
+
+        ### ⚠️ 风险点
+        - 升级失败导致服务不可用
+        - 配置不兼容导致启动失败
+        - 模块缺失导致功能异常
+
+        ### 🧠 推荐方式
+        - 优先使用 **平滑升级（USR2 + WINCH）**
+        - 禁止直接覆盖运行中的 nginx 二进制
+
+---
+
   - type: dropdown
     id: update_type
     attributes:
