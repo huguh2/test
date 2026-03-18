@@ -22,8 +22,6 @@ body:
         - 优先使用 **平滑升级（USR2 + WINCH）**
         - 禁止直接覆盖运行中的 nginx 二进制
 
----
-
   - type: dropdown
     id: update_type
     attributes:
